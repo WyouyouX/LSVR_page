@@ -1,0 +1,396 @@
+{
+ "sequences": [
+  {
+   "id": "dress00123",
+   "label": "4D-DRESS 00123",
+   "camera_name": "Cam013",
+   "color": [
+    86,
+    124,
+    150
+   ],
+   "methods": [
+    {
+     "id": "gaussian_garments",
+     "label": "Gaussian Garments"
+    },
+    {
+     "id": "gaussian_wardrobe",
+     "label": "Gaussian Wardrobe"
+    },
+    {
+     "id": "ours",
+     "label": "Ours"
+    }
+   ],
+   "frames": [
+    {
+     "frame": 15,
+     "meshes": {
+      "gaussian_garments": {
+       "garment": "dress00123/gaussian_garments_00015_garment.drc",
+       "body": "dress00123/tracked_00015_body.drc"
+      },
+      "gaussian_wardrobe": {
+       "garment": "dress00123/gaussian_wardrobe_00015_garment.drc",
+       "body": "dress00123/tracked_00015_body.drc"
+      },
+      "ours": {
+       "garment": "dress00123/ours_00015_garment.drc",
+       "body": "dress00123/ours_00015_body.drc"
+      }
+     }
+    },
+    {
+     "frame": 43,
+     "meshes": {
+      "gaussian_garments": {
+       "garment": "dress00123/gaussian_garments_00043_garment.drc",
+       "body": "dress00123/tracked_00043_body.drc"
+      },
+      "gaussian_wardrobe": {
+       "garment": "dress00123/gaussian_wardrobe_00043_garment.drc",
+       "body": "dress00123/tracked_00043_body.drc"
+      },
+      "ours": {
+       "garment": "dress00123/ours_00043_garment.drc",
+       "body": "dress00123/ours_00043_body.drc"
+      }
+     }
+    },
+    {
+     "frame": 71,
+     "meshes": {
+      "gaussian_garments": {
+       "garment": "dress00123/gaussian_garments_00071_garment.drc",
+       "body": "dress00123/tracked_00071_body.drc"
+      },
+      "gaussian_wardrobe": {
+       "garment": "dress00123/gaussian_wardrobe_00071_garment.drc",
+       "body": "dress00123/tracked_00071_body.drc"
+      },
+      "ours": {
+       "garment": "dress00123/ours_00071_garment.drc",
+       "body": "dress00123/ours_00071_body.drc"
+      }
+     }
+    },
+    {
+     "frame": 99,
+     "meshes": {
+      "gaussian_garments": {
+       "garment": "dress00123/gaussian_garments_00099_garment.drc",
+       "body": "dress00123/tracked_00099_body.drc"
+      },
+      "gaussian_wardrobe": {
+       "garment": "dress00123/gaussian_wardrobe_00099_garment.drc",
+       "body": "dress00123/tracked_00099_body.drc"
+      },
+      "ours": {
+       "garment": "dress00123/ours_00099_garment.drc",
+       "body": "dress00123/ours_00099_body.drc"
+      }
+     }
+    },
+    {
+     "frame": 127,
+     "meshes": {
+      "gaussian_garments": {
+       "garment": "dress00123/gaussian_garments_00127_garment.drc",
+       "body": "dress00123/tracked_00127_body.drc"
+      },
+      "gaussian_wardrobe": {
+       "garment": "dress00123/gaussian_wardrobe_00127_garment.drc",
+       "body": "dress00123/tracked_00127_body.drc"
+      },
+      "ours": {
+       "garment": "dress00123/ours_00127_garment.drc",
+       "body": "dress00123/ours_00127_body.drc"
+      }
+     }
+    },
+    {
+     "frame": 155,
+     "meshes": {
+      "gaussian_garments": {
+       "garment": "dress00123/gaussian_garments_00155_garment.drc",
+       "body": "dress00123/tracked_00155_body.drc"
+      },
+      "gaussian_wardrobe": {
+       "garment": "dress00123/gaussian_wardrobe_00155_garment.drc",
+       "body": "dress00123/tracked_00155_body.drc"
+      },
+      "ours": {
+       "garment": "dress00123/ours_00155_garment.drc",
+       "body": "dress00123/ours_00155_body.drc"
+      }
+     }
+    }
+   ],
+   "camera": {
+    "position": [
+     2.6194,
+     1.75264,
+     0.66484
+    ],
+    "target": [
+     -0.22611,
+     1.0327,
+     -0.12954
+    ],
+    "up": [
+     -0.22804,
+     0.97157,
+     -0.06366
+    ],
+    "fov": 59.561,
+    "aspect": 0.7344
+   }
+  },
+  {
+   "id": "actor04",
+   "label": "Actor04",
+   "camera_name": "Cam107",
+   "color": [
+    105,
+    98,
+    184
+   ],
+   "methods": [
+    {
+     "id": "gaussian_garments",
+     "label": "Gaussian Garments"
+    },
+    {
+     "id": "gaussian_wardrobe",
+     "label": "Gaussian Wardrobe"
+    },
+    {
+     "id": "ours",
+     "label": "Ours"
+    }
+   ],
+   "frames": [
+    {
+     "frame": 160,
+     "meshes": {
+      "gaussian_garments": {
+       "garment": "actor04/gaussian_garments_00160_garment.drc",
+       "body": "actor04/tracked_00160_body.drc"
+      },
+      "gaussian_wardrobe": {
+       "garment": "actor04/gaussian_wardrobe_00160_garment.drc",
+       "body": "actor04/tracked_00160_body.drc"
+      },
+      "ours": {
+       "garment": "actor04/ours_00160_garment.drc",
+       "body": "actor04/ours_00160_body.drc"
+      }
+     }
+    },
+    {
+     "frame": 280,
+     "meshes": {
+      "gaussian_garments": {
+       "garment": "actor04/gaussian_garments_00280_garment.drc",
+       "body": "actor04/tracked_00280_body.drc"
+      },
+      "gaussian_wardrobe": {
+       "garment": "actor04/gaussian_wardrobe_00280_garment.drc",
+       "body": "actor04/tracked_00280_body.drc"
+      },
+      "ours": {
+       "garment": "actor04/ours_00280_garment.drc",
+       "body": "actor04/ours_00280_body.drc"
+      }
+     }
+    },
+    {
+     "frame": 400,
+     "meshes": {
+      "gaussian_garments": {
+       "garment": "actor04/gaussian_garments_00400_garment.drc",
+       "body": "actor04/tracked_00400_body.drc"
+      },
+      "gaussian_wardrobe": {
+       "garment": "actor04/gaussian_wardrobe_00400_garment.drc",
+       "body": "actor04/tracked_00400_body.drc"
+      },
+      "ours": {
+       "garment": "actor04/ours_00400_garment.drc",
+       "body": "actor04/ours_00400_body.drc"
+      }
+     }
+    },
+    {
+     "frame": 520,
+     "meshes": {
+      "gaussian_garments": {
+       "garment": "actor04/gaussian_garments_00520_garment.drc",
+       "body": "actor04/tracked_00520_body.drc"
+      },
+      "gaussian_wardrobe": {
+       "garment": "actor04/gaussian_wardrobe_00520_garment.drc",
+       "body": "actor04/tracked_00520_body.drc"
+      },
+      "ours": {
+       "garment": "actor04/ours_00520_garment.drc",
+       "body": "actor04/ours_00520_body.drc"
+      }
+     }
+    },
+    {
+     "frame": 640,
+     "meshes": {
+      "gaussian_garments": {
+       "garment": "actor04/gaussian_garments_00640_garment.drc",
+       "body": "actor04/tracked_00640_body.drc"
+      },
+      "gaussian_wardrobe": {
+       "garment": "actor04/gaussian_wardrobe_00640_garment.drc",
+       "body": "actor04/tracked_00640_body.drc"
+      },
+      "ours": {
+       "garment": "actor04/ours_00640_garment.drc",
+       "body": "actor04/ours_00640_body.drc"
+      }
+     }
+    },
+    {
+     "frame": 760,
+     "meshes": {
+      "gaussian_garments": {
+       "garment": "actor04/gaussian_garments_00760_garment.drc",
+       "body": "actor04/tracked_00760_body.drc"
+      },
+      "gaussian_wardrobe": {
+       "garment": "actor04/gaussian_wardrobe_00760_garment.drc",
+       "body": "actor04/tracked_00760_body.drc"
+      },
+      "ours": {
+       "garment": "actor04/ours_00760_garment.drc",
+       "body": "actor04/ours_00760_body.drc"
+      }
+     }
+    }
+   ],
+   "camera": {
+    "position": [
+     1.61877,
+     1.2968,
+     1.62906
+    ],
+    "target": [
+     0.00101,
+     1.25734,
+     0.00163
+    ],
+    "up": [
+     -0.00207,
+     0.99975,
+     -0.02218
+    ],
+    "fov": 23.162,
+    "aspect": 1.3673
+   }
+  }
+ ],
+ "ablation": {
+  "id": "ablation",
+  "label": "Actor01",
+  "frame": 297,
+  "camera_name": "Cam151",
+  "color": [
+   196,
+   105,
+   128
+  ],
+  "variants": [
+   {
+    "id": "full",
+    "label": "Full Model",
+    "garment": "ablation/full_garment.drc",
+    "body": "ablation/full_body.drc"
+   },
+   {
+    "id": "pure_mesh",
+    "label": "Pure Mesh",
+    "garment": "ablation/pure_mesh_garment.drc",
+    "body": "ablation/pure_mesh_body.drc"
+   },
+   {
+    "id": "wo_lf",
+    "label": "w/o LF Branch",
+    "garment": "ablation/wo_lf_garment.drc",
+    "body": "ablation/wo_lf_body.drc"
+   },
+   {
+    "id": "wo_residual",
+    "label": "w/o Residual Branch",
+    "garment": "ablation/pure_mesh_garment.drc",
+    "body": "ablation/pure_mesh_body.drc"
+   },
+   {
+    "id": "pca",
+    "label": "PCA",
+    "garment": "ablation/pca_garment.drc",
+    "body": "ablation/pca_body.drc"
+   },
+   {
+    "id": "wo_spectral",
+    "label": "w/o Spectral Coord.",
+    "garment": "ablation/wo_spectral_garment.drc",
+    "body": "ablation/wo_spectral_body.drc"
+   },
+   {
+    "id": "canonical_xyz",
+    "label": "Canonical XYZ",
+    "garment": "ablation/canonical_xyz_garment.drc",
+    "body": "ablation/canonical_xyz_body.drc"
+   },
+   {
+    "id": "wo_body",
+    "label": "w/o Body Loss",
+    "garment": "ablation/wo_body_garment.drc",
+    "body": "ablation/wo_body_body.drc"
+   },
+   {
+    "id": "wo_cloth",
+    "label": "w/o Cloth Loss",
+    "garment": "ablation/wo_cloth_garment.drc",
+    "body": "ablation/wo_cloth_body.drc"
+   },
+   {
+    "id": "wo_collision",
+    "label": "w/o Collision Loss",
+    "garment": "ablation/wo_collision_garment.drc",
+    "body": "ablation/wo_collision_body.drc"
+   },
+   {
+    "id": "wo_leakage",
+    "label": "w/o Leakage Loss",
+    "garment": "ablation/wo_leakage_garment.drc",
+    "body": "ablation/wo_leakage_body.drc"
+   }
+  ],
+  "camera": {
+   "position": [
+    -1.01234,
+    0.1228,
+    -1.78204
+   ],
+   "target": [
+    0.01572,
+    0.88524,
+    0.03282
+   ],
+   "up": [
+    -0.1758,
+    0.93919,
+    -0.29498
+   ],
+   "fov": 47.382,
+   "aspect": 0.7309
+  }
+ }
+}

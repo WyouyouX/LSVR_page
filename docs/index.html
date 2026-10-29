@@ -1,0 +1,251 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>LSVR: Hybrid Laplacian Spectral–Vertex Representation for Dynamic Garment Reconstruction</title>
+  <meta name="description" content="LSVR reconstructs dynamic garments from multi-view video with a hybrid Laplacian spectral–vertex representation: low-frequency spectral coefficients for dominant deformation and spectrally guided vertex residuals for fine wrinkles.">
+  <meta property="og:title" content="LSVR: A Hybrid Laplacian Spectral–Vertex Representation for Cross-Scale Dynamic Garment Reconstruction">
+  <meta property="og:description" content="Coarse-to-fine dynamic garment reconstruction with a mesh-fixed Laplacian eigenbasis, spectrally guided vertex residuals and staged Gaussian–garment–body optimization.">
+  <meta property="og:image" content="static/images/framework.webp">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%235a54b5'/%3E%3Cpath d='M18 46V18h6v22h14v6z' fill='white'/%3E%3Cpath d='M40 18h6l-6 16z' fill='%23f2b8c6'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,600;8..60,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+  <link rel="stylesheet" href="static/css/style.css">
+  <script type="importmap">
+    {"imports": {"three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js", "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"}}
+  </script>
+</head>
+<body>
+
+<nav class="anchor-nav" aria-label="Sections">
+  <div class="container">
+    <div class="nav-item"><a class="nav-link" href="#abstract">Abstract</a></div>
+    <div class="nav-item">
+      <a class="nav-link" href="#overview">Overview</a>
+      <div class="nav-menu"><a href="#why-scales">Why separate scales</a><a href="#framework">Framework</a></div>
+    </div>
+    <div class="nav-item"><a class="nav-link" href="#explore">Interactive</a></div>
+    <div class="nav-item">
+      <a class="nav-link" href="#results">Results</a>
+      <div class="nav-menu"><a href="#highlights">Highlights</a><a href="#results-tables">Benchmark tables</a><a href="#spectral-response">Spectral response</a></div>
+    </div>
+    <div class="nav-item">
+      <a class="nav-link" href="#qualitative">Qualitative</a>
+      <div class="nav-menu"><a href="#garment-reconstruction">Garment reconstruction</a><a href="#garment-body">Garment–body intersections</a><a href="#novel-view">Novel-view rendering</a></div>
+    </div>
+    <div class="nav-item">
+      <a class="nav-link" href="#ablation">Ablation</a>
+      <div class="nav-menu"><a href="#ablation-viewer">Interactive comparison</a><a href="#ablation-tables">Ablation tables</a><a href="#ablation-figure">Representation and loss ablations</a></div>
+    </div>
+    <div class="nav-item"><a class="nav-link" href="#limitations">Limitations</a></div>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="container">
+    <h1><span class="brand">LSVR</span>: A Hybrid Laplacian Spectral–Vertex Representation for Cross-Scale Dynamic Garment Reconstruction</h1>
+    <p class="anon">Anonymous Authors</p>
+    <p class="venue">Submitted to the IEEE Transactions on Image Processing (TIP).<br>Author information omitted for anonymous review.</p>
+    <div class="links">
+      <span class="pill is-disabled" title="The paper link will be added after the review">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 2h9l5 5v15H6z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M14 2v6h6" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
+        Paper <small>coming soon</small>
+      </span>
+      <a class="pill" href="#explore">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2 3 7v10l9 5 9-5V7z M3 7l9 5 9-5 M12 12v10" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
+        Interactive 3D
+      </a>
+      <a class="pill" href="#results">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        Results
+      </a>
+    </div>
+  </div>
+  <div class="container teaser">
+    <div class="teaser-media">
+      <div class="teaser-clip"><video src="static/videos/actor04_body_front.mp4" data-body="static/videos/actor04_body_front.mp4" data-garment="static/videos/actor04_front.mp4" autoplay muted loop playsinline preload="auto" aria-label="Reconstructed lower garment, front view"></video></div>
+      <div class="teaser-clip"><video src="static/videos/actor04_body_orbit.mp4" data-body="static/videos/actor04_body_orbit.mp4" data-garment="static/videos/actor04_orbit.mp4" autoplay muted loop playsinline preload="auto" aria-label="Reconstructed lower garment, orbiting view"></video></div>
+    </div>
+    <div class="teaser-foot">
+      <p class="teaser-caption">Dynamic skirt reconstruction by LSVR on 4D-DRESS subject 00185, seen from a fixed front camera and an orbiting camera.</p>
+      <div class="tabs small" role="group" aria-label="Teaser display" id="teaser-mode">
+        <button type="button" data-mode="body" class="is-active">With body</button>
+        <button type="button" data-mode="garment">Garment only</button>
+      </div>
+    </div>
+  </div>
+</header>
+
+<section id="abstract" class="band">
+  <div class="container narrow">
+    <h2>Abstract</h2>
+    <p>Dynamic garment reconstruction from multi-view videos requires capturing both large-scale deformation and fine-scale wrinkle details. Existing methods address this cross-scale challenge through frequency-aware architectures or supervision. However, they rarely impose an explicit frequency-ordered structure on the deformation variables, making cross-scale separation and optimization less effective. We propose LSVR, a hybrid Laplacian spectral–vertex representation for coarse-to-fine garment reconstruction. LSVR first reconstructs coarse garment geometry using low-frequency coefficients of a mesh-fixed Laplacian eigenbasis. It then recovers fine-scale details through vertex-domain residuals conditioned on selected higher-frequency spectral coordinates. Finally, a staged collaborative optimization refines the garment mesh, mesh-bound Gaussian attributes, and body geometry under multi-view image supervision. Experiments on 4D-DRESS and ActorsHQ demonstrate that LSVR substantially improves geometric reconstruction accuracy and pixel-level rendering fidelity over existing methods while maintaining competitive perceptual quality.</p>
+  </div>
+</section>
+
+<section id="overview">
+  <div class="container">
+    <h2>Overview</h2>
+    <p class="lead">Large-scale drape and fine wrinkles occupy different spatial scales, yet most methods optimize them in one shared deformation space, where global shape recovery and local detail refinement compensate for each other. LSVR builds the scale separation into the representation: a fixed Laplacian eigenbasis of the garment template carries the dominant deformation in a few low-frequency coefficients and guides vertex-domain residuals for fine wrinkles, while a staged Gaussian–garment–body optimization aligns the mesh with multi-view images and removes garment–body penetrations.</p>
+    <h3 class="fig-title" id="why-scales">Why separate scales</h3>
+    <figure class="figure zoomable">
+      <img src="static/images/motivation.webp" alt="A frequency-entangled representation couples scales and distorts the garment, while a Laplacian spectral parameterization separates dominant deformation from localized wrinkles" loading="lazy" width="2056" height="716">
+    </figure>
+    <h3 class="fig-title" id="framework">Framework</h3>
+    <figure class="figure zoomable">
+      <img src="static/images/framework.webp" alt="LSVR framework overview" loading="lazy" width="3000" height="1586">
+    </figure>
+  </div>
+</section>
+
+<section id="explore" class="band">
+  <div class="container">
+    <h2>Explore the reconstructions</h2>
+    <p class="lead">Garment and body meshes from the paper's comparison, shown in one shared camera. Drag to orbit, right-drag to pan, and scroll to zoom once you have clicked into the viewer. X-ray makes the body translucent to reveal penetration.</p>
+    <div class="viewer-card" id="compare-viewer">
+      <div class="viewer-top">
+        <div class="tabs" role="tablist" data-role="sequences"></div>
+        <div class="view-tools">
+          <div class="tabs small" role="group" aria-label="Body display" data-role="body">
+            <button type="button" data-mode="solid" class="is-active">Body</button>
+            <button type="button" data-mode="xray">X-ray</button>
+            <button type="button" data-mode="hidden">Garment only</button>
+          </div>
+          <button type="button" class="icon-btn" data-role="reset" aria-label="Reset view" title="Reset view">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12a9 9 0 1 0 3-6.7M3 4v5h5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+        </div>
+      </div>
+      <div class="mv-stage">
+        <div class="mv-grid three"></div>
+        <canvas class="mv-canvas"></canvas>
+        <div class="mv-hint" aria-hidden="true">Drag to orbit</div>
+        <div class="mv-message" hidden></div>
+      </div>
+      <div class="timeline">
+        <button type="button" class="play-btn" data-role="play" aria-label="Play">
+          <svg class="i-play" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13l11-6.5z" fill="currentColor"/></svg>
+          <svg class="i-pause" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 5h3.5v14H7zM13.5 5H17v14h-3.5z" fill="currentColor"/></svg>
+        </button>
+        <div class="ribbon" role="tablist" aria-label="Frames" data-role="ribbon"></div>
+      </div>
+      <p class="viewer-caption"><b data-role="title"></b> <span data-role="desc"></span> Baselines are shown with the tracked SMPL-X body and LSVR with its corrected body. SCARF is left out because its meshes are not in world coordinates.</p>
+    </div>
+  </div>
+</section>
+
+<section id="results">
+  <div class="container">
+    <h2>Quantitative results</h2>
+    <p class="lead">LSVR against SCARF, Gaussian Garments and Gaussian Wardrobe under the same splits, preprocessing and protocol on four ActorsHQ and four 4D-DRESS sequences.</p>
+    <div class="stats" id="highlights">
+      <div class="stat"><span class="stat-value">66.7%</span><span class="stat-label">lower P2S than the strongest baseline on 4D-DRESS</span></div>
+      <div class="stat"><span class="stat-value">52.4%</span><span class="stat-label">lower garment–body penetration ratio on 4D-DRESS</span></div>
+      <div class="stat"><span class="stat-value">+2.33 dB</span><span class="stat-label">PSNR over the best baseline on ActorsHQ (500 frames)</span></div>
+      <div class="stat"><span class="stat-value">12.2%</span><span class="stat-label">lower contour HD95 than Gaussian Wardrobe on ActorsHQ</span></div>
+    </div>
+
+    <div class="table-card" id="results-tables">
+      <div class="tabs" role="tablist" data-role="tables"></div>
+      <div class="table-selectors" data-role="selectors"></div>
+      <div class="table-wrap" data-role="table"></div>
+      <p class="table-caption" data-role="caption"></p>
+      <p class="table-note" data-role="note" hidden></p>
+    </div>
+
+    <div class="fig-block medium" id="spectral-response">
+      <h3 class="fig-title">Spectral response of garment normals</h3>
+      <figure class="figure zoomable">
+        <img src="static/images/frequency_response.webp" alt="RMS normal variation against relative spatial frequency for GT, Gaussian Garments, Gaussian Wardrobe and LSVR" loading="lazy" width="1190" height="1020">
+        <figcaption>The normal variation of LSVR follows the ground-truth spectral distribution across coarse, mesoscale and fine-detail frequencies.</figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<section id="qualitative" class="band">
+  <div class="container">
+    <h2>Qualitative comparisons</h2>
+    <h3 class="fig-title" id="garment-reconstruction">Garment reconstruction</h3>
+    <figure class="figure zoomable">
+      <img src="static/images/garments.webp" alt="Garment reconstructions of GT, SCARF, Gaussian Garments, Gaussian Wardrobe and LSVR with enlarged regions" loading="lazy" width="2104" height="1076">
+    </figure>
+    <h3 class="fig-title" id="garment-body">Garment–body intersections</h3>
+    <figure class="figure zoomable">
+      <img src="static/images/intersections.webp" alt="Garment-body intersections of SCARF, Gaussian Garments, Gaussian Wardrobe and LSVR over several frames" loading="lazy" width="2028" height="820">
+    </figure>
+    <h3 class="fig-title" id="novel-view">Novel-view rendering</h3>
+    <figure class="figure zoomable">
+      <img src="static/images/rendering.webp" alt="Novel-view renderings of GT, SCARF, Gaussian Garments, Gaussian Wardrobe and LSVR with enlarged regions" loading="lazy" width="2060" height="940">
+    </figure>
+  </div>
+</section>
+
+<section id="ablation">
+  <div class="container">
+    <h2>Ablation</h2>
+    <p class="lead">Each variant removes or replaces one component on ActorsHQ A01. Pick a variant to compare it with the full model under the same camera.</p>
+    <div class="viewer-card" id="ablation-viewer">
+      <div class="viewer-top">
+        <div class="tabs wrap" role="tablist" data-role="variants"></div>
+        <div class="view-tools">
+          <div class="tabs small" role="group" aria-label="Body display" data-role="body">
+            <button type="button" data-mode="solid" class="is-active">Body</button>
+            <button type="button" data-mode="xray">X-ray</button>
+            <button type="button" data-mode="hidden">Garment only</button>
+          </div>
+          <button type="button" class="icon-btn" data-role="reset" aria-label="Reset view" title="Reset view">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12a9 9 0 1 0 3-6.7M3 4v5h5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+        </div>
+      </div>
+      <div class="mv-stage">
+        <div class="mv-grid two"></div>
+        <canvas class="mv-canvas"></canvas>
+        <div class="mv-hint" aria-hidden="true">Drag to orbit</div>
+        <div class="mv-message" hidden></div>
+      </div>
+      <p class="viewer-caption" data-role="label"></p>
+    </div>
+
+    <div class="table-card" id="ablation-tables">
+      <div class="tabs wrap" role="tablist" data-role="tables"></div>
+      <div class="table-wrap" data-role="table"></div>
+      <p class="table-caption" data-role="caption"></p>
+    </div>
+
+    <div class="fig-block wide" id="ablation-figure">
+      <h3 class="fig-title">Representation and loss ablations</h3>
+      <figure class="figure zoomable">
+        <img src="static/images/ablation_qualitative.webp" alt="Full model and ten ablation variants on the same frame" loading="lazy" width="1255" height="810">
+      </figure>
+    </div>
+  </div>
+</section>
+
+<section id="limitations" class="band">
+  <div class="container narrow">
+    <h2>Limitations</h2>
+    <p>The Laplacian eigensystem is computed per garment template and kept fixed within a sequence, so spectral coordinates are not comparable across independently constructed templates. Future work will explore adaptive spectral subspace selection to generalize across diverse garment topologies and challenging configurations, including loose and layered garments.</p>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container narrow">
+    <p>LSVR builds upon <a href="https://github.com/graphdeco-inria/gaussian-splatting">3D Gaussian Splatting</a>, <a href="https://ribosome-rbx.github.io/Gaussian-Garments/">Gaussian Garments</a> and <a href="https://github.com/lizhe00/AnimatableGaussians">Animatable Gaussians</a>, and uses data from <a href="https://github.com/eth-ait/4d-dress">4D-DRESS</a> and <a href="https://actors-hq.com/">ActorsHQ</a>.</p>
+  </div>
+</footer>
+
+<div class="lightbox" hidden>
+  <button type="button" class="lightbox-close" aria-label="Close">×</button>
+  <img alt="">
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js" defer></script>
+<script src="static/js/main.js" defer></script>
+<script type="module" src="static/js/viewer.js"></script>
+</body>
+</html>

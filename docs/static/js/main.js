@@ -16,11 +16,17 @@ const M = {
   lpips: { name: "LPIPS", dir: -1, digits: 4 },
 };
 
+const WARDROBE_NOTE = [
+  "About Gaussian Wardrobe. ",
+  "Gaussian Wardrobe represents garments with 3D Gaussians, and its released code outputs each frame only as a Gaussian point cloud without surface connectivity. For every geometric comparison on this page, each of its frames is converted into a triangle mesh with the same pipeline: statistical outlier removal, normal estimation, Poisson surface reconstruction and trimming of low-density vertices.",
+];
+
 const RESULTS = [
   {
     id: "alignment",
     tab: "ActorsHQ · 2D alignment",
     caption: "Projected garment alignment on the held-out ActorsHQ views (Table I). Best results are bold and second-best underlined.",
+    note: WARDROBE_NOTE,
     methods: BASELINES4,
     metrics: ["viou", "f1", "ccd", "hd95"],
     selectors: [{ label: "Subject", values: ["Mean", "A01", "A02", "A04", "A05"] }],
@@ -36,6 +42,7 @@ const RESULTS = [
     id: "geometry",
     tab: "4D-DRESS · 3D geometry",
     caption: "3D lower-garment reconstruction under the controlled synthetic 4D-DRESS protocol (Table II). SCARF is template-free and is not evaluated here.",
+    note: WARDROBE_NOTE,
     methods: BASELINES3,
     metrics: ["p2s", "cdl1", "nc", "pen"],
     selectors: [{ label: "Sequence", values: ["Mean", "Trousers", "Shorts", "Short Skirt", "Long Skirt"] }],
